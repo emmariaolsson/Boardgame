@@ -1,5 +1,5 @@
 import javax.swing.*;
-
+import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 
 class ViewControl extends JFrame implements ActionListener {
@@ -14,8 +14,16 @@ class ViewControl extends JFrame implements ActionListener {
 }
 
 class Square extends JButton {
-    Square(int i, int j) {
+    ImageIcon X, O;
+    byte value = 0;
+    /*
+    0: default
+    1: X
+    2: O
+     */
 
-        System.out.println("Tryck på knapp " + i + " " + j);
+    Square(int i, int j) {
+        X = new ImageIcon(this.getClass().getResource("X.png"));
+        O = new ImageIcon(this.getClass().getResource("O.png"));
     }
 }
