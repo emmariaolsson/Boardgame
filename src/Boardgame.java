@@ -1,3 +1,5 @@
 public interface Boardgame {
-    public boolean move(int)
+    public boolean move(int) {
+
+    }
 }
