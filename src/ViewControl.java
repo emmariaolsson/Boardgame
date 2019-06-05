@@ -22,7 +22,7 @@ class ViewControl extends JFrame /*implements ActionListener */ {
         setVisible(true);
         int size = 3;
 
-        JButton[][] board = new JButton[3][3]; //Equivalent to subclass Square
+        JButton[][] board = new JButton[size][size];
         JPanel p = new JPanel();
         p.setBounds(50, 50, 390, 390);
         p.setLayout(new GridLayout(size, size));
@@ -44,35 +44,9 @@ class ViewControl extends JFrame /*implements ActionListener */ {
 
 
     public void actionPerformed(ActionEvent e) {
-        getMessage();
+        getMessage(); //
+        getStatus(); //empty, X or O
 
-
-    }
-
-
-
-
-        /*
-        Square[][] board = new Square[][]();
-
-        Container container = getContentPane ();
-        container.setBackground (new Color(255, 230, 170));
-        container.add (board);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        */
 
     }
 }
-/*
-class Square extends JButton[][] {
-        JPanel p = new JPanel();
-        p.setBounds(130, 130, 390, 390);
-        p.setLayout(new GridLayout(3, 3));
-        getContentPane().add(p)
-
-
-        Square() {
-
-    }
-}
-*/
