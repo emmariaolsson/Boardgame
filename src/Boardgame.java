@@ -1,8 +1,8 @@
 
 public interface Boardgame {
-	public boolean move(int i, int j);          //gives true if move went okay otherwise false
-	public String getStatus(int i, int j);      //returns the contents of square (i,j)
-	public String getMessage();                 //return OK or error message
+	public void move(int i, int j);             //gives true if move went okay otherwise false
+	public char getStatus(int i, int j);        //returns the contents of square (i,j)?? states whose turn??
+	public String getMessage();                 //returns whose turn it is
 }
 
 
@@ -14,28 +14,23 @@ class TicTacToeModel implements Boardgame {
 	private int playerId;
 	private char [][] board;
 	
+	//constructor 
+
 	public TicTacToeModel() {
 		this.board = new char[3][3];
 		this.moveCount = 9;
 		this.playerId = 1;
-		
+		this.message = "Player 1 start";
+	
 	}
 
 	@Override
-	public boolean move(int i, int j) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getStatus(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+	public char getStatus(int i, int j) {
+		return board[i][j];
 	}
 
 	@Override
 	public String getMessage() {
-		// TODO Auto-generated method stub
 		return message;
 	}
 	
@@ -66,6 +61,33 @@ class TicTacToeModel implements Boardgame {
 	
 	public void setBoard(char[][] board) {
 		this.board = board;
+	}
+	
+	@Override
+	public void move (int i, int j) {
+		if (getMoveCount() > 0) {
+			if(playerId == 1) 
+				board[i][j] = 'X';
+			else
+				board[i][j] = 'O';
+			setMoveCount(--moveCount);
+			
+			//check if board is full
+			
+			if (getMoveCount() == 0) {
+				//TODO something
+			}else {
+				if (playerId%2 != 0) {
+					setPlayerId(2);
+					setMessage("Player 2: 'O'");
+				}else {
+					setPlayerId(1);
+					setMessage("Player 1: 'X");
+				}
+			}
+			
+	}
+		
 	}
 
 
