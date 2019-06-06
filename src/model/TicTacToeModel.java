@@ -1,7 +1,7 @@
 package model;
 
 
-class TicTacToeModel implements Boardgame {
+public class TicTacToeModel implements Boardgame {
 	
 
 	private String message;

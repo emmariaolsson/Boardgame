@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import model.*;
 
 public class ViewControl extends JFrame  implements ActionListener {
     //private Boardgame game;
@@ -47,7 +48,7 @@ public class ViewControl extends JFrame  implements ActionListener {
         view.add(turnMessage, BorderLayout.SOUTH);
 
         turnMessage.add(turn);
-        turn.setText("Player 1 start"); //Maybe should receive the message from model
+        turn.setText(model.getMessage('9'); //Maybe should receive the message from model
         turn.setFont(new Font("Sans Serif", Font.BOLD, 20));
 
         //Each cell in JButton[][] board is given individual buttons.
@@ -104,4 +105,20 @@ public class ViewControl extends JFrame  implements ActionListener {
     }
 */
 
+}
+
+
+public class Controller {
+    private TicTacToeModel model;
+
+    public void setModel(TicTacToeModel model) {
+        this.model = model;
+    }
+
+    public void setRequest(ArrayList<Integer> position) {
+        model.ticMove(position.get(0), position.get(1));
+    }
+
+    // Write a function here that handles the case where three are already placed on the board.
+    // public void setRequest
 }
