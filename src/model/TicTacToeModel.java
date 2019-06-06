@@ -68,32 +68,52 @@ public class TicTacToeModel implements Boardgame {
 			setMoveCount(--moveCount);
 			
 			//check if board is full
-			
-			if (getMoveCount() == 3) {
-				//kolla isWinner() 
-				//TODO something flyttfasen move()
+			if (playerId%2 != 0) {
+				setPlayerId(2);
+				setMessage("Player 2: 'O'");
 			}else {
-				if (playerId%2 != 0) {
-					setPlayerId(2);
-					setMessage("Player 2: 'O'");
-				}else {
-					setPlayerId(1);
-					setMessage("Player 1: 'X");
-				
-				}
+				setPlayerId(1);
+				setMessage("Player 1: 'X'");
+			}
+		}
+		else if (getMoveCount() == 3) {
+			if (!move(i, j)) {
+				setMessage("Invalid Move");
+			}else {
+				board[i][j] = ' ';
+				setMoveCount(++moveCount);
+				ticMove(i,j);
+				setMessage("Move to empty square");
 			}
 			
-	}
+			if (playerId%2 != 0) {
+				setPlayerId(2);
+				setMessage("Player 2: 'O'");
+			}else {
+				setPlayerId(1);
+				setMessage("Player 1: 'X");
+			
+			}
+		}
 		
 	}
 	@Override
-	public void move(int i, int j) {
-		
+	public boolean move(int i, int j) {
+		//TODO gives true if move is ok
+		if (board[i][j] == '\0') {
+			return false;
+		}
+		return true;
 	}
 	
-	public void isWinner(int i, int j) {
-		//TODO check if there is winner
+	
+	public void newMove(int x, int y) {
+		if(playerId == 1) 
+			board[x][y] = 'X';
+		else
+			board[x][y] = 'O';
 	}
+	
 
 
 	
