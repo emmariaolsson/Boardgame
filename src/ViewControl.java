@@ -1,52 +1,103 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-class ViewControl extends JFrame /*implements ActionListener */ {
+public class ViewControl extends JFrame  implements ActionListener {
     //private Boardgame game;
-    //private int size; //Will be 3
-    //private Square[][] board;  //Square is a subclass to JButton
-    //private JLabel mess;  //Message display
+    private int size = 3; //Will be 3
+    private JFrame view = new JFrame();
+    private JButton[][] board;  //All squares with buttons on board
+    private JLabel turn;  //Message display
 
-    //ViewControl(Boardgame gm, int n) {
 
-    ViewControl () {
+
+    public ViewControl () {
         super("Emma's & Freddie's fantastic Tic Tac Toe");
-        setTitle("Tic Tac Toe");
-        setLayout(new FlowLayout());
+        this.setTitle("Tic Tac Toe");
+        this.board = new JButton[size][size];
+        this.turn  = new JLabel("Player 1 turn"); //Will later depend on getMessage().
+        turn.setToolTipText("Will update upon next turn."); //This text is visible when hovering over the boardgame.
+        initialize();
+    }
 
-        JLabel mess  = new JLabel("Player 1 turn"); //Will later depend on getMessage().
-        mess.setToolTipText("This will be updated between turns."); //This text is visible when hovering.
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600, 800);
-        setVisible(true);
-        int size = 3;
 
-        JButton[][] board = new JButton[size][size];
-        JPanel p = new JPanel();
-        p.setBounds(50, 50, 390, 390);
-        p.setLayout(new GridLayout(size, size));
-        getContentPane().add(p);
-        p.setVisible(true);
 
+    public void initialize() {
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        view.setSize(500, 500);
+
+        //Below, the containers which will hold the  are initialized.
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        JPanel game = new JPanel();
+        game.setLayout(new GridLayout(size, size));
+        panel.add(game, BorderLayout.CENTER); //Places the TicTacToe grid in the center of the frame.
+
+        //Container for the textbox that will be updated upon new player's turn.
+        JPanel turnMessage = new JPanel(new FlowLayout());
+        turnMessage.setBackground(new Color(255, 215, 230)); //Can also write e.g. Color.white.
+
+        //These panels are added to the view frame.
+        view.add(panel, BorderLayout.NORTH);
+        view.add(turnMessage, BorderLayout.SOUTH);
+
+        turnMessage.add(turn);
+        turn.setText("Player 1 start"); //Maybe should receive the message from model
+
+        //Each cell in JButton[][] board is given individual buttons.
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 board[r][c] = new JButton();
-                board[r][c].setBackground(new Color(188, 200, 188));
+                board[r][c].setPreferredSize(new Dimension(120, 120));
+                board[r][c].setBackground(new Color(240, 190, 183));
                 board[r][c].addActionListener(this);
-                board[r][c].setSize(130, 130);
-                p.add(board[r][c]);
+                board[r][c].setText("");
+
+                game.add(board[r][c]);
             }
         }
-        add(mess);
-
+        view.setVisible(true);
     }
 
 
+    public ArrayList<Integer> getPostion(ActionEvent e) {
+        ArrayList<Integer> position = new ArrayList<>();
+        for(int r = 0; r < size; r++) {
+            for(int c = 0; c < size; c++) {
+                if(e.getSource() == board[r][c]) {
+                    position.add(r);
+                    position.add(c);
+                }
+            }
+        }
+        return position;
+    }
+
+
+    public void updateBoard(int r, int c, char player, String message) {
+        board[r][c].setText(Character.toString(player)); //Here the button is updated with players symbol on actionEvent(meaning button pressed)
+        board[r][c].setEnabled(false);
+        turn.setText(message);
+    }
+
+
+    public String getButtonValue(int i, int j) {
+        return board[i][j].getText();
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
-        getMessage(); //
-        getStatus(); //empty, X or O
+
+    }
+/*
+    public void actionPerformed(ActionEvent e) {
+        mess = getMessage(); //
+        value = getStatus(); //empty, X or O
 
 
     }
+*/
+
 }
