@@ -8,14 +8,14 @@ import java.util.ArrayList;
 public class ViewControl extends JFrame  implements ActionListener {
     //private Boardgame game;
     private int size = 3; //Will be 3
-    private JFrame view = new JFrame();
+    private JFrame view;
     private JButton[][] board;  //All squares with buttons on board
     private JLabel turn;  //Message display
 
 
 
     public ViewControl () {
-        super("Emma's & Freddie's fantastic Tic Tac Toe");
+        view = new JFrame("Emma's & Freddie's fantastic Tic Tac Toe");
         this.setTitle("Tic Tac Toe");
         this.board = new JButton[size][size];
         this.turn  = new JLabel("Player 1 turn"); //Will later depend on getMessage().
@@ -34,11 +34,13 @@ public class ViewControl extends JFrame  implements ActionListener {
         panel.setLayout(new FlowLayout());
         JPanel game = new JPanel();
         game.setLayout(new GridLayout(size, size));
+        game.setBackground(new Color(240, 190, 183));
+        game.setVisible(true);
         panel.add(game, BorderLayout.CENTER); //Places the TicTacToe grid in the center of the frame.
 
         //Container for the textbox that will be updated upon new player's turn.
         JPanel turnMessage = new JPanel(new FlowLayout());
-        turnMessage.setBackground(new Color(255, 215, 230)); //Can also write e.g. Color.white.
+        turnMessage.setBackground(new Color(255, 255, 255)); //Can also write e.g. Color.white.
 
         //These panels are added to the view frame.
         view.add(panel, BorderLayout.NORTH);
@@ -46,6 +48,7 @@ public class ViewControl extends JFrame  implements ActionListener {
 
         turnMessage.add(turn);
         turn.setText("Player 1 start"); //Maybe should receive the message from model
+        turn.setFont(new Font("Sans Serif", Font.BOLD, 20));
 
         //Each cell in JButton[][] board is given individual buttons.
         for (int r = 0; r < size; r++) {
@@ -77,9 +80,9 @@ public class ViewControl extends JFrame  implements ActionListener {
     }
 
 
-    public void updateBoard(int r, int c, char player, String message) {
+    public void updateFirstThree(int r, int c, char player, String message) {
         board[r][c].setText(Character.toString(player)); //Here the button is updated with players symbol on actionEvent(meaning button pressed)
-        board[r][c].setEnabled(false);
+        //board[r][c].setEnabled(false); //This will be controlled in model
         turn.setText(message);
     }
 
