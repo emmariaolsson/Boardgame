@@ -1,4 +1,3 @@
-import model.Boardgame;
 import model.TicTacToeModel;
 import viewController.ViewControl;
 

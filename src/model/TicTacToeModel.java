@@ -13,7 +13,7 @@ public class TicTacToeModel implements Boardgame {
 
 	public TicTacToeModel() {
 		this.board = new char[3][3];
-		this.moveCount = 9;
+		this.moveCount = 0; //Changed so it counts up ++moveCount, since we will make an endless game where moveCount should be reset when it reaches 6 symbols on the board.
 		this.playerId = 1;
 		this.message = "Player 1 start";
 
@@ -31,15 +31,15 @@ public class TicTacToeModel implements Boardgame {
 	}
 	
 	
-	public void setMessage(String message) {
+	private void setMessage(String message) {
 		this.message = message;
 	}
 	
-	public int getMoveCount() {
+	private int getMoveCount() {
 		return moveCount;
 	}
 	
-	public void setMoveCount(int moveCount) {
+	private void setMoveCount(int moveCount) {
 		this.moveCount = moveCount;
 	}
 	
@@ -47,7 +47,7 @@ public class TicTacToeModel implements Boardgame {
 		return playerId;
 	}
 	
-	public void setPlayerId(int playerId) {
+	private void setPlayerId(int playerId) {
 		this.playerId = playerId;
 	}
 	
@@ -64,12 +64,12 @@ public class TicTacToeModel implements Boardgame {
 	
 
 	public void ticMove (int i, int j) {
-		if (getMoveCount() > 0) {
+		if (getMoveCount() < 7) {
 			if(playerId == 1) 
 				board[i][j] = 'X';
 			else
 				board[i][j] = 'O';
-			setMoveCount(--moveCount);
+			setMoveCount(++moveCount);
 			
 			//check if board is full
 			if (playerId%2 != 0) {
@@ -80,7 +80,7 @@ public class TicTacToeModel implements Boardgame {
 				setMessage("Player 1: 'X'");
 			}
 		}
-		else if (getMoveCount() == 3) {
+		if (getMoveCount() == 7) {
 			if (!move(i, j)) {
 				setMessage("Invalid Move");
 			}else {
