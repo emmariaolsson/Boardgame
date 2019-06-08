@@ -7,19 +7,25 @@ import java.util.ArrayList;
 import model.*;
 
 public class ViewControl extends JFrame  implements ActionListener {
-    //private Boardgame game;
+    private TicTacToeModel model;
     private int size = 3; //Will be 3
     private JFrame view;
     private JButton[][] board;  //All squares with buttons on board
     private JLabel turn;  //Message display
 
 
+    public void setModel(TicTacToeModel model) { this.model = model; }
+
+    public void setRequest(ArrayList<Integer> position) {
+        model.ticMove(position.get(0), position.get(1));
+        updateBoard(position.get(0), position.get(1), model.getStatus(position.get(0), position.get(1)));
+    }
 
     public ViewControl () {
         view = new JFrame("Emma's & Freddie's fantastic Tic Tac Toe");
         this.setTitle("Tic Tac Toe");
         this.board = new JButton[size][size];
-        this.turn  = new JLabel("Player 1 turn"); //Will later depend on getMessage().
+        this.turn  = new JLabel("Player 1 start"); //Will later depend on getMessage().
         turn.setToolTipText("Will update upon next turn."); //This text is visible when hovering over the boardgame.
         initialize();
     }
@@ -48,7 +54,7 @@ public class ViewControl extends JFrame  implements ActionListener {
         view.add(turnMessage, BorderLayout.SOUTH);
 
         turnMessage.add(turn);
-        turn.setText(model.getMessage('9'); //Maybe should receive the message from model
+        turn.setText("Player 1 start"); //Maybe should receive the message from model
         turn.setFont(new Font("Sans Serif", Font.BOLD, 20));
 
         //Each cell in JButton[][] board is given individual buttons.
@@ -67,7 +73,7 @@ public class ViewControl extends JFrame  implements ActionListener {
     }
 
 
-    public ArrayList<Integer> getPostion(ActionEvent e) {
+    public ArrayList<Integer> getPosition(ActionEvent e) { //When a button is pressed it returns the row and column.
         ArrayList<Integer> position = new ArrayList<>();
         for(int r = 0; r < size; r++) {
             for(int c = 0; c < size; c++) {
@@ -81,10 +87,10 @@ public class ViewControl extends JFrame  implements ActionListener {
     }
 
 
-    public void updateFirstThree(int r, int c, char player, String message) {
+    public void updateBoard(int r, int c, char player) {
         board[r][c].setText(Character.toString(player)); //Here the button is updated with players symbol on actionEvent(meaning button pressed)
         //board[r][c].setEnabled(false); //This will be controlled in model
-        turn.setText(message);
+        turn.setText(model.getMessage());
     }
 
 
@@ -94,7 +100,8 @@ public class ViewControl extends JFrame  implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        ArrayList<Integer> position = this.getPosition(e);
+        this.setRequest(position);
     }
 /*
     public void actionPerformed(ActionEvent e) {
@@ -105,20 +112,4 @@ public class ViewControl extends JFrame  implements ActionListener {
     }
 */
 
-}
-
-
-public class Controller {
-    private TicTacToeModel model;
-
-    public void setModel(TicTacToeModel model) {
-        this.model = model;
-    }
-
-    public void setRequest(ArrayList<Integer> position) {
-        model.ticMove(position.get(0), position.get(1));
-    }
-
-    // Write a function here that handles the case where three are already placed on the board.
-    // public void setRequest
 }

@@ -50,9 +50,12 @@ public class TicTacToeModel implements Boardgame {
 		this.playerId = playerId;
 	}
 	
+	/*
 	public char[][] getBoard() {
+
 		return board;
 	}
+	*/
 	
 	public void setBoard(char[][] board) {
 		this.board = board;
