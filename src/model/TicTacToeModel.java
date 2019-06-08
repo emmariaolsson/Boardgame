@@ -16,6 +16,7 @@ public class TicTacToeModel implements Boardgame {
 		this.moveCount = 9;
 		this.playerId = 1;
 		this.message = "Player 1 start";
+
 	
 	}
 

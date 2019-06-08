@@ -8,23 +8,24 @@ import model.*;
 
 public class ViewControl extends JFrame  implements ActionListener {
     private TicTacToeModel model;
-    private int size = 3; //Will be 3
+    //private int size = 3; //Will be 3
     private JFrame view;
     private JButton[][] board;  //All squares with buttons on board
     private JLabel turn;  //Message display
 
 
-    public void setModel(TicTacToeModel model) { this.model = model; }
+    //public void setModel(TicTacToeModel model) { this.model = model; }
 
     public void setRequest(ArrayList<Integer> position) {
         model.ticMove(position.get(0), position.get(1));
         updateBoard(position.get(0), position.get(1), model.getStatus(position.get(0), position.get(1)));
     }
 
-    public ViewControl () {
+    public ViewControl (TicTacToeModel model) {
+        this.model = model;
         view = new JFrame("Emma's & Freddie's fantastic Tic Tac Toe");
         this.setTitle("Tic Tac Toe");
-        this.board = new JButton[size][size];
+        this.board = new JButton[3][3];
         this.turn  = new JLabel("Player 1 start"); //Will later depend on getMessage().
         turn.setToolTipText("Will update upon next turn."); //This text is visible when hovering over the boardgame.
         initialize();
@@ -40,7 +41,7 @@ public class ViewControl extends JFrame  implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JPanel game = new JPanel();
-        game.setLayout(new GridLayout(size, size));
+        game.setLayout(new GridLayout(3, 3));
         game.setBackground(new Color(240, 190, 183));
         game.setVisible(true);
         panel.add(game, BorderLayout.CENTER); //Places the TicTacToe grid in the center of the frame.
@@ -55,11 +56,11 @@ public class ViewControl extends JFrame  implements ActionListener {
 
         turnMessage.add(turn);
         turn.setText("Player 1 start"); //Maybe should receive the message from model
-        turn.setFont(new Font("Sans Serif", Font.BOLD, 20));
+        turn.setFont(new Font("", Font.BOLD, 20));
 
         //Each cell in JButton[][] board is given individual buttons.
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
                 board[r][c] = new JButton();
                 board[r][c].setPreferredSize(new Dimension(120, 120));
                 board[r][c].setBackground(new Color(240, 190, 183));
@@ -75,8 +76,8 @@ public class ViewControl extends JFrame  implements ActionListener {
 
     public ArrayList<Integer> getPosition(ActionEvent e) { //When a button is pressed it returns the row and column.
         ArrayList<Integer> position = new ArrayList<>();
-        for(int r = 0; r < size; r++) {
-            for(int c = 0; c < size; c++) {
+        for(int r = 0; r < 3; r++) {
+            for(int c = 0; c < 3; c++) {
                 if(e.getSource() == board[r][c]) {
                     position.add(r);
                     position.add(c);
@@ -103,13 +104,5 @@ public class ViewControl extends JFrame  implements ActionListener {
         ArrayList<Integer> position = this.getPosition(e);
         this.setRequest(position);
     }
-/*
-    public void actionPerformed(ActionEvent e) {
-        mess = getMessage(); //
-        value = getStatus(); //empty, X or O
-
-
-    }
-*/
 
 }
