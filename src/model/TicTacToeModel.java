@@ -8,6 +8,7 @@ public class TicTacToeModel implements Boardgame {
 	private int moveCount;
 	private int playerId;
 	private char [][] board;
+	private String playerSymbol;
 
 	
 	//constructor 
@@ -17,9 +18,7 @@ public class TicTacToeModel implements Boardgame {
 		this.moveCount = 0;
 		this.playerId = 1;
 		this.message = "Player 1 start";
-	
-
-	
+		this.playerSymbol = "X";
 	}
 
 	@Override
@@ -49,21 +48,15 @@ public class TicTacToeModel implements Boardgame {
 		return playerId;
 	}
 	
+	public void setplayerSymbol(String playerSymbol) {
+		this.playerSymbol = playerSymbol;
+	}
+	
 	public void setPlayerId(int playerId) {
 		this.playerId = playerId;
 	}
 
-	
-	
-	public char getBoard(int i, int j) {
 
-		return board[i][j];
-	}
-	
-	
-	public void setBoard(char[][] board) {
-		this.board = board;
-	}
 	
 	public static String valueOf(char c) {
 		String s = String.valueOf(c);
@@ -77,52 +70,45 @@ public class TicTacToeModel implements Boardgame {
 
 	public void ticMove (int i, int j) {
 		if (getMoveCount() <= 5) {
-			if(playerId == 1) 
-				board[i][j] = 'X';
-			else
-				board[i][j] = 'O';
-			
-			
-			//check if board is full
-			if (playerId%2 != 0) {
-				setPlayerId(2);
-				setMessage("Player 2: 'O'");
+			if (board[i][j] == '\0') {
+				if(playerId == 1) 
+					board[i][j] = 'X';
+				else if(playerId == 2)
+					board[i][j] = 'O';
+				
+				//check if board is full
+				if (playerId%2 != 0) {
+					setPlayerId(2);
+					setplayerSymbol("O");
+					setMessage("Player 2: 'O'");
+				}else {
+					setPlayerId(1);
+					setplayerSymbol("X");
+					setMessage("Player 1: 'X'");
+				}
 			}else {
-				setPlayerId(1);
-				setMessage("Player 1: 'X'");
+				setMessage("Invalid Move");
+				setMoveCount(--moveCount);
 			}
 		}
 		if (getMoveCount() >= 6) {
 			//setMessage(valueOf(getBoard(i,j)));
 			if (!move(i, j)) {
-				setMessage("Invalid move");
-				setMoveCount(++moveCount);
+				setMessage("Invalid Move");
+				setMoveCount(--moveCount);
+				
 			}else {
 				makeEmpty(i,j);
 				setMessage("Place new");
+				setMoveCount(moveCount-2);
 			}
+		
 		}
 		setMoveCount(++moveCount);
+		System.out.println(moveCount);	
+		System.out.println(playerId);
 	}
-		
-		
-//			}else {
-//				board[i][j] = ' ';
-//				setMoveCount(++moveCount);
-//				ticMove(i,j);
-//				setMessage("Move to empty square");
-//			}
-//	
-//			if (playerId%2 != 0) {
-//				setPlayerId(2);
-//				setMessage("Player 2: 'O'");
-//			}else {
-//				setPlayerId(1);
-//				setMessage("Player 1: 'X");
-//			
-//			}
-		
-		
+				
 	
 	@Override
 	public boolean move(int i, int j) {
@@ -130,25 +116,14 @@ public class TicTacToeModel implements Boardgame {
 		if (board[i][j] == '\0') {
 			return false;
 		}
-		if (board[i][j] == 'X' && playerId == 1) {
+		else if (board[i][j] == 'O' && playerId == 2) {
 			return true;
 		}
-		if (board[i][j] == '0' && playerId == 2) {
+		else if (board[i][j] == 'X' && playerId == 1) {
 			return true;
 		}
 		return false;
 	}
-	
-	
-	public void newMove(int x, int y) {
-		if(playerId == 1) 
-			board[x][y] = 'X';
-		else
-			board[x][y] = 'O';
-	}
-	
-
-
-	
+		
 }
 

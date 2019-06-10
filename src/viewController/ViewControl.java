@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import model.*;
+//import test.*;
 
 public class ViewControl extends JFrame  implements ActionListener {
     private TicTacToeModel model;
@@ -32,8 +33,7 @@ public class ViewControl extends JFrame  implements ActionListener {
     }
 
 
-
-    public void initialize() {
+	public void initialize() {
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         view.setSize(500, 500);
 
