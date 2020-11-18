@@ -1,2 +1,2 @@
-# Boardgame
+# Boardgame: Tic Tac Toe
 
